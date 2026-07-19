@@ -83,37 +83,37 @@ window.HUB = {
 
   leads: [
     {id:"L-3051", name:"Camille Verdon", email:"c.verdon@maison-verdon.com", phone:"+33 1 53 90 22 40", postcode:"Paris, FR",
-     projectType:"Sovereign Audit · Creation pillar", idealStart:"In 1-3 months",
+     requestType:"Sovereign Audit", projectType:"Sovereign Audit · Creation pillar", idealStart:"In 1-3 months",
      message:"Read your essay on why luxury has lost its meaning and it named exactly the drift our house is feeling. We would like the audit to map where we create human value and where we are leaving it on the table.",
      page:"/thinking/luxury-has-lost-its-meaning/", pageUrl:"website/thinking/luxury-has-lost-its-meaning/", srcShort:"Essay (organic search)", srcKind:"organic",
      utm:{source:"google",medium:"organic",campaign:"-",content:"-",term:"meaning of luxury"},
      stage:"New", date:"16 Jul 2026", notes:"Organic search into the Creation cornerstone essay, then straight to the Sovereign Audit request. Named house, high intent. Route to Martina for a first call."},
     {id:"L-3049", name:"Daniel Osei", email:"daniel.osei@meridian-private.com", phone:"+44 20 7946 1180", postcode:"London, UK",
-     projectType:"Sovereign Audit · Wealth pillar", idealStart:"In 3-6 months",
+     requestType:"Sovereign Audit", projectType:"Sovereign Audit · Wealth pillar", idealStart:"In 3-6 months",
      message:"Came from Dr. Olbert's LinkedIn post, then read What Finance Is For. We are repositioning a private bank around purpose and want an outside read on where we actually create meaning for clients.",
      page:"/thinking/what-finance-is-for/", pageUrl:"website/thinking/what-finance-is-for/", srcShort:"LinkedIn (founder post)", srcKind:"social",
      utm:{source:"linkedin",medium:"social",campaign:"founder-organic",content:"what-finance-is-for-post",term:"-"},
      stage:"In conversation", date:"13 Jul 2026", notes:"Founder LinkedIn post into the Wealth essay, then the audit form. Called 14/07. Strong fit, decision maker engaged."},
     {id:"L-3047", name:"Ingrid Halvorsen", email:"i.halvorsen@nordic-futures-forum.org", phone:"+47 22 90 11 55", postcode:"Oslo, NO",
-     projectType:"Keynote · New Earth Economy", idealStart:"As soon as possible",
+     requestType:"Keynote", projectType:"Keynote · New Earth Economy", idealStart:"As soon as possible",
      message:"Programming the main stage of our leadership forum in the autumn. Dr. Olbert's framing of humanistic capitalism is exactly the opening our audience needs. Requesting availability and fee.",
      page:"/speaking/", pageUrl:"website/speaking/", srcShort:"Speaking page (direct)", srcKind:"direct",
      utm:{source:"direct",medium:"-",campaign:"-",content:"-",term:"-"},
      stage:"Call booked", date:"10 Jul 2026", notes:"Keynote enquiry through the Speaking page. Intro call booked 22/07 to confirm date and scope. Warm, credible event."},
     {id:"L-3044", name:"Sofia Marchetti", email:"s.marchetti@vitala-longevity.com", phone:"+39 02 9000 4412", postcode:"Milan, IT",
-     projectType:"Sovereign Audit · Health & Longevity", idealStart:"In 1-3 months",
+     requestType:"Sovereign Audit", projectType:"Sovereign Audit · Health & Longevity", idealStart:"In 1-3 months",
      message:"Founder of a longevity brand. Found the Health pillar page while researching how to talk about value beyond clinical claims. Want the audit to show where our story is meaningful and where it is just features.",
      page:"/pillars/health/", pageUrl:"website/pillars/health/", srcShort:"Pillar page (organic)", srcKind:"organic",
      utm:{source:"google",medium:"organic",campaign:"-",content:"-",term:"longevity brand meaning"},
      stage:"Proposal sent", date:"5 Jul 2026", notes:"Organic into the Health pillar, then the audit. Scope agreed, proposal sent 11/07. Good proof the pillar pages pull new sectors."},
     {id:"L-3040", name:"Priya Raman", email:"priya@newearth-collective.org", phone:"+1 415 555 0177", postcode:"San Francisco, US",
-     projectType:"Partnership · programming and research", idealStart:"In 3-6 months",
+     requestType:"Partnership", projectType:"Partnership · programming and research", idealStart:"In 3-6 months",
      message:"We convene founders building the new economy and would like to explore a content and programming partnership around the Sovereign Hexagon. Introduced by a mutual contact who pointed us to the site.",
      page:"/contact/", pageUrl:"website/contact/", srcShort:"Partnership form (referral)", srcKind:"direct",
      utm:{source:"referral",medium:"-",campaign:"-",content:"-",term:"-"},
      stage:"Won", date:"28 Jun 2026", notes:"WON. Partnership agreed for a joint content series and a forum session. Referral warmed by reading the thesis pages beforehand."},
     {id:"L-3035", name:"Mark Whitfield", email:"mwhitfield@apex-brandconsult.com", phone:"+44 161 555 0293", postcode:"Manchester, UK",
-     projectType:"General enquiry", idealStart:"Just exploring",
+     requestType:"General", projectType:"General enquiry", idealStart:"Just exploring",
      message:"Consultant asking whether Meaning Global white-labels the Sovereign Hexagon framework for other agencies to resell.",
      page:"/contact/", pageUrl:"website/contact/", srcShort:"General form (direct)", srcKind:"direct",
      utm:{source:"direct",medium:"-",campaign:"-",content:"-",term:"-"},
@@ -336,9 +336,9 @@ window.HUB = {
             <marker id="arw" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto"><path d="M0,0 L6.5,3 L0,6 Z" fill="#b8b8c0"/></marker>
             <marker id="arwC" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto"><path d="M0,0 L6.5,3 L0,6 Z" fill="#B4894C"/></marker>
           </defs>
-          <text class="col-label" x="30" y="32">The content &middot; essays and the Report</text>
-          <text class="col-label" x="470" y="278">Creation pillar</text>
-          <text class="col-label" x="862" y="278">Sovereign Audit &middot; CRM</text>
+          <text class="col-label" x="30" y="82">The content &middot; essays and the Report</text>
+          <text class="col-label" x="595" y="250" text-anchor="middle">Creation pillar</text>
+          <text class="col-label" x="985" y="250" text-anchor="middle">Web Form Submissions &middot; CRM</text>
 
           <path class="wire" marker-end="url(#arw)" d="M330 154 C 400 154, 405 330, 462 330"/>
           <path class="wire" marker-end="url(#arw)" d="M330 330 C 405 330, 410 330, 462 330"/>
@@ -363,3 +363,38 @@ window.HUB = {
     </div>`,
   },
 };
+
+/* --- Progressive enhancement: add a "Request type" column to the CRM table ---
+   The chassis renderCrm() (index.html) hardcodes its columns. Rather than edit
+   the version-pinned chassis, we override the global renderCrm AFTER it is
+   defined. content.js runs before the chassis's inline <script>, so we wait for
+   DOMContentLoaded (which fires after that script has executed and defined the
+   global renderCrm plus its helpers esc/badge/CRM/STAGE_ORDER/crmState). The
+   override mirrors the chassis renderer exactly, inserting one column that reads
+   each lead's requestType. Filters and stage edits call the same global, so the
+   column persists across every re-render. */
+if (typeof window !== 'undefined' && typeof window.addEventListener === 'function')
+window.addEventListener('DOMContentLoaded', function () {
+  if (typeof window.renderCrm !== 'function') return;
+  window.renderCrm = function () {
+    var meta = window.HUB.crmMeta || {};
+    document.getElementById('crmHeading').textContent =
+      meta.heading || (VIEWS.crm && VIEWS.crm.title) || 'Leads & pipeline';
+    document.getElementById('crmLede').innerHTML = meta.lede
+      || 'Every enquiry captured with source, attribution, the converting page and pipeline stage. Click a lead to open it.';
+    var counts = {}; CRM.forEach(function (l) { counts[l.stage] = (counts[l.stage] || 0) + 1; });
+    var fil = '<span class="sfil ' + (crmState.stage === "all" ? "active" : "") + '" onclick="setCrmFilter(\'all\')">All <span class="n">' + CRM.length + '</span></span>';
+    STAGE_ORDER.forEach(function (s) { if (counts[s]) fil += '<span class="sfil ' + (crmState.stage === s ? "active" : "") + '" onclick="setCrmFilter(\'' + s + '\')">' + s + ' <span class="n">' + counts[s] + '</span></span>'; });
+    document.getElementById('stageFilter').innerHTML = fil;
+    var reqStyle = 'display:inline-block;padding:.2em .65em;border:1px solid var(--hairline);border-radius:999px;font-size:.78rem;font-weight:600;white-space:nowrap;color:var(--ink)';
+    var rows = CRM.filter(function (l) { return crmState.stage === "all" || l.stage === crmState.stage; }).map(function (l) {
+      return '<tr onclick="openCrmLead(\'' + l.id + '\')"><td><div class="nm">' + esc(l.name) + '</div><div class="sub">' + esc(l.email) + '</div></td>'
+        + '<td><span style="' + reqStyle + '">' + esc(l.requestType || '—') + '</span></td>'
+        + '<td>' + esc(l.projectType) + '</td><td><span class="src-pill ' + l.srcKind + '">' + esc(l.srcShort) + '</span></td>'
+        + '<td>' + badge(l.stage) + '</td><td class="sub">' + esc(l.date) + '</td></tr>';
+    }).join('');
+    document.getElementById('crmList').innerHTML = '<div class="table-scroll"><table class="lead-table"><thead><tr><th>Lead</th><th>Request type</th><th>Project</th><th>Source</th><th>Stage</th><th>Received</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+  };
+  var crmView = document.getElementById('view-crm');
+  if (crmView && !crmView.hidden) window.renderCrm();
+});
