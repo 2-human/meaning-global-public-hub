@@ -43,7 +43,11 @@
 [data-review-mode="on"] [data-comment-id] {
   outline: 1px dashed rgba(176, 141, 79, .4); /* brass low-alpha */
   outline-offset: 2px;
-  position: relative;
+  /* No layout properties here. `outline` is paint-only and never reflows the
+     page, but `position` would override a site element's own positioning (e.g.
+     a full-bleed hero image is position:absolute; forcing relative collapsed the
+     hero). Keep this rule visual-only so activating review mode never changes
+     the page. */
 }
 [data-review-mode="on"] [data-comment-id].has-comment { outline: 1.5px solid rgba(176, 141, 79, .8); }
 [data-review-mode="on"] [data-comment-id].has-applied-comment { outline: 1.5px solid rgba(47, 125, 78, .65); }
