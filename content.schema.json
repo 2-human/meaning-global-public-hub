@@ -1,0 +1,236 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://2-human.com/schema/proposal-hub/content.schema.json",
+  "title": "proposal-hub content instance (window.HUB)",
+  "description": "The config contract for a proposal-hub pitch. A content.js assigns window.HUB to an object of this shape; the chassis (hub.html) renders entirely from it. Validate with: node validate-content.mjs [content.js]. Chassis version: 2.0.0.",
+  "type": "object",
+  "required": ["agency", "brand", "defaultView", "nav", "VIEWS", "STAGES", "html"],
+  "properties": {
+    "agency": {
+      "type": "object",
+      "description": "The pitching org. Fixed across an agency's pitches. Pure config: no agency identity lives in the chassis.",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "description": "Sidebar brand line 1." },
+        "unit": { "type": "string", "description": "Sidebar brand line 2 (small caps subtitle)." },
+        "org": { "type": "string", "description": "Full org name used in the document title." },
+        "lang": { "type": "string", "description": "BCP-47 language tag set on <html lang>." },
+        "logo": {
+          "description": "Sidebar mark: an inline SVG string, or {src} pointing at an image.",
+          "oneOf": [
+            { "type": "string" },
+            { "type": "object", "required": ["src"], "properties": { "src": { "type": "string" } } }
+          ]
+        },
+        "favicon": { "type": "string", "description": "Favicon path (falls back to top-level favicon)." },
+        "tokens": {
+          "type": "object",
+          "description": "Brand colour tokens. Each maps to a CSS custom property the chassis overrides at load. Any subset; omitted tokens keep the chassis brand-neutral default. PLATFORM-faithful colours (Google/Trustpilot/Facebook/social) are NOT here: they are chassis constants.",
+          "properties": {
+            "accent": { "type": "string" }, "accentStrong": { "type": "string" }, "accentSoft": { "type": "string" },
+            "ink": { "type": "string" }, "ink2": { "type": "string" }, "inkMuted": { "type": "string" },
+            "sidebar": { "type": "string" }, "bg": { "type": "string" }, "bgAlt": { "type": "string" },
+            "hairline": { "type": "string" }, "onDark": { "type": "string" }
+          }
+        },
+        "fonts": {
+          "type": "object",
+          "description": "Optional. `display`/`body` set the CSS font stacks; `import` injects a stylesheet <link> (e.g. Google Fonts). Omit for a dependency-free system-font default.",
+          "properties": {
+            "display": { "type": "string" }, "body": { "type": "string" }, "import": { "type": "string" }
+          }
+        }
+      }
+    },
+    "brand": {
+      "type": "object",
+      "description": "The pitch (who the hub is for).",
+      "required": ["proposalFor"],
+      "properties": {
+        "proposalFor": { "type": "string", "description": "Prospect name; 'Proposal for <b>___</b>'." },
+        "foot": { "type": "string", "description": "Sidebar footer HTML." }
+      }
+    },
+    "favicon": { "type": "string" },
+    "title": { "type": "string", "description": "Optional document title override." },
+    "defaultView": { "type": "string", "description": "View key opened at the hub root / no hash." },
+    "WEB": { "type": "string", "description": "Base path the embedded website prototype is served at." },
+    "nav": {
+      "type": "array",
+      "description": "Sidebar groups, order, labels, per-view icon, count chips. Each item maps to <section id=view-{view}> and to an html key or a built-in renderer.",
+      "items": {
+        "type": "object",
+        "required": ["section", "items"],
+        "properties": {
+          "section": { "type": "string" },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["view", "label"],
+              "properties": {
+                "view": { "type": "string" },
+                "label": { "type": "string" },
+                "icon": { "type": "string", "description": "Inline SVG for the nav glyph. The chassis ships none." },
+                "badge": { "type": "number", "description": "Count chip." }
+              }
+            }
+          }
+        }
+      }
+    },
+    "VIEWS": {
+      "type": "object",
+      "description": "Per-view toolbar + view type, keyed by view. `type` selects the VIEW_TYPES renderer (default 'static' = html-only).",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" }, "sub": { "type": "string" },
+          "open": { "type": "string" }, "openLabel": { "type": "string" },
+          "type": { "type": "string", "enum": ["static", "social", "ads", "gbp", "tp", "crm", "clients"] },
+          "tbBadge": { "type": "string" }, "infoPane": { "type": "boolean" }
+        }
+      }
+    },
+    "PF": {
+      "type": "object",
+      "description": "Social platform chrome. The Organic Posts view derives its chips from whichever platforms the posts actually use.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["name", "cls", "tag"],
+        "properties": { "name": { "type": "string" }, "cls": { "type": "string" }, "tag": { "type": "string" } }
+      }
+    },
+    "socialMeta": {
+      "type": "object",
+      "properties": { "heading": { "type": "string" }, "lede": { "type": "string" }, "allLabel": { "type": "string" } }
+    },
+    "crmMeta": {
+      "type": "object",
+      "properties": { "heading": { "type": "string" }, "lede": { "type": "string" } }
+    },
+    "social": {
+      "type": "array",
+      "description": "Organic Posts. One card per platform each post declares.",
+      "items": {
+        "type": "object",
+        "required": ["slug", "title", "img", "posts"],
+        "properties": {
+          "slug": { "type": "string" }, "title": { "type": "string" },
+          "location": { "type": "string" },
+          "img": { "type": "string", "description": "Image path (or data URI). The chassis owns no asset root." },
+          "article": { "type": "string" },
+          "posts": {
+            "type": "object",
+            "description": "Keyed by a PF platform key. Include only the platforms this pitch uses.",
+            "additionalProperties": {
+              "type": "object",
+              "required": ["cap"],
+              "properties": { "cap": { "type": "string" }, "tags": { "type": "array", "items": { "type": "string" } } }
+            }
+          }
+        }
+      }
+    },
+    "STAGES": {
+      "type": "object",
+      "description": "CRM pipeline stages as an ORDERED map {label: cssClass}. Filter/select order is this key order (one source of truth; no duplicate array).",
+      "additionalProperties": { "type": "string" }
+    },
+    "leads": {
+      "type": "array",
+      "description": "CRM table + lead drawer.",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "email", "projectType", "srcShort", "srcKind", "stage", "date"],
+        "properties": {
+          "id": { "type": "string" }, "name": { "type": "string" },
+          "email": { "type": "string" }, "phone": { "type": "string" }, "postcode": { "type": "string" },
+          "projectType": { "type": "string" }, "idealStart": { "type": "string" },
+          "message": { "type": "string" },
+          "page": { "type": "string" }, "pageUrl": { "type": ["string", "null"] },
+          "srcShort": { "type": "string" },
+          "srcKind": { "type": "string", "enum": ["paid", "social", "organic", "direct"], "description": "Drives the source pill colour." },
+          "utm": {
+            "type": "object",
+            "properties": { "source": {}, "medium": {}, "campaign": {}, "content": {}, "term": {} }
+          },
+          "stage": { "type": "string", "description": "Must be a key of STAGES." },
+          "date": { "type": "string" }, "notes": { "type": "string" }
+        }
+      }
+    },
+    "gbp": {
+      "type": "object",
+      "description": "Google Business Profile mockup. Editorial framing lives in html.gbp (which must contain one <div data-hub-mount>).",
+      "properties": {
+        "name": { "type": "string" }, "category": { "type": "string" },
+        "address": { "type": "string" }, "hours": { "type": "string" },
+        "phone": { "type": "string" }, "website": { "type": "string" }, "attrs": { "type": "string" },
+        "photos": { "type": "array", "items": { "type": "string" }, "description": "Image paths (or data URIs)." },
+        "rating": { "type": ["string", "number"] }, "reviewCount": { "type": ["string", "number"] },
+        "dist": {
+          "type": "array", "description": "Rating distribution bars (5 to 1). No values hardcoded in the chassis.",
+          "items": { "type": "object", "required": ["s", "p"], "properties": { "s": { "type": "number" }, "p": { "type": "number" } } }
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["author", "when", "text"],
+            "properties": { "author": { "type": "string" }, "when": { "type": "string" }, "rating": { "type": "number" }, "text": { "type": "string" }, "ownerReply": { "type": "string" } }
+          }
+        },
+        "posts": {
+          "type": "array",
+          "items": { "type": "object", "required": ["type", "title"], "properties": { "type": { "type": "string" }, "title": { "type": "string" }, "body": { "type": "string" }, "cta": { "type": "string" }, "img": { "type": "string" } } }
+        },
+        "products": {
+          "type": "array",
+          "items": { "type": "object", "required": ["name"], "properties": { "name": { "type": "string" }, "price": { "type": "string" }, "desc": { "type": "string" }, "img": { "type": "string" } } }
+        },
+        "qa": {
+          "type": "array",
+          "items": { "type": "object", "required": ["q", "a"], "properties": { "q": { "type": "string" }, "a": { "type": "string" } } }
+        }
+      }
+    },
+    "tp": {
+      "type": "object",
+      "description": "Trustpilot mockup. Editorial framing lives in html.tp (which must contain one <div data-hub-mount>).",
+      "properties": {
+        "name": { "type": "string" }, "domain": { "type": "string" },
+        "score": { "type": ["string", "number"] }, "reviewCount": { "type": ["string", "number"] }, "label": { "type": "string" },
+        "dist": {
+          "type": "array",
+          "items": { "type": "object", "required": ["s", "p"], "properties": { "s": { "type": "number" }, "p": { "type": "number" } } }
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["author", "rating", "title", "body"],
+            "properties": { "author": { "type": "string" }, "loc": { "type": "string" }, "nrev": { "type": "number" }, "rating": { "type": "number" }, "when": { "type": "string" }, "title": { "type": "string" }, "body": { "type": "string" }, "doe": { "type": "string" }, "reply": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "sitepane": { "type": "string", "description": "Website info-pane body HTML, injected when a view sets infoPane:true." },
+    "clients": {
+      "type": "array",
+      "description": "Who We Are client wall. Rendered into html.who's <div data-hub-mount>.",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string" },
+          "logo": { "type": "string", "description": "Logo image path (or omit for a text mark). No asset root in the chassis." },
+          "desc": { "type": "string" }, "did": { "type": "string" }
+        }
+      }
+    },
+    "html": {
+      "type": "object",
+      "description": "Static/editorial views as HTML strings, keyed by view. A data-driven view's editorial (gbp/tp/who) must contain exactly one <div data-hub-mount> where the mockup renders.",
+      "additionalProperties": { "type": "string" }
+    }
+  }
+}
