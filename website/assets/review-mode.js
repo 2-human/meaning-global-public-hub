@@ -219,7 +219,7 @@
     els.side = el('aside', 'review-sidebar');
     els.side.appendChild(el('h3', null, esc(LABELS.sidebarTitle)));
     els.tabs = el('div', 'review-tabs');
-    [['active', LABELS.tabActive], ['applied', LABELS.tabApplied], ['archived', LABELS.tabArchived]].forEach(function (pair) {
+    [['active', LABELS.tabActive], ['archived', LABELS.tabArchived]].forEach(function (pair) {
       var k = pair[0];
       var b = el('button', k === state.filter ? 'on' : null, esc(pair[1]) + ' <span class="count">0</span>');
       b.dataset.k = k;
@@ -364,9 +364,8 @@
       var acts = el('div', 'actions');
       // Full three-state button sets (comment-lifecycle.md §"commentLifecycleMode: 'full'")
       if (s === 'pending') {
-        acts.appendChild(actBtn(LABELS.apply, 'apply-btn', function () {
-          transition(id, { status: 'applied', applied_at: Date.now() }, 'comment-applied', LABELS.appliedToast);
-        }));
+        // No "Apply" button: comments are applied from the CLI (Claude reads them
+        // and edits the source), not marked applied inside the widget.
         acts.appendChild(actBtn(LABELS.edit, 'edit-btn', function () {
           modal(LABELS.editTitle, c.anchor, c.comment || '', c.replacement || '', function (t, r) {
             transition(id, { comment: t, replacement: r || null, edited_at: Date.now() }, 'comment-edited', LABELS.savedToast);
