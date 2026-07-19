@@ -407,7 +407,24 @@
     anchorPass();
     // Dynamic content added after init picks up anchors on the next observer tick.
     try {
-      var mo = new MutationObserver(function () { anchorPass(); render(); });
+      // The widget's own chrome (banner/sidebar/pill/modal/toast) lives inside
+      // <body>, so render()'s writes to the sidebar list would retrigger this
+      // observer and loop forever, freezing the page. Only react to mutations
+      // that add real page content — never the widget's own chrome.
+      var CHROME_ROOTS = '.review-banner,.review-sidebar,.review-pill,.review-modal-overlay,.review-toast';
+      var isChrome = function (n) {
+        return !!(n && n.nodeType === 1 && n.closest && n.closest(CHROME_ROOTS));
+      };
+      var mo = new MutationObserver(function (muts) {
+        var relevant = muts.some(function (m) {
+          if (isChrome(m.target)) return false;            // change within chrome
+          return Array.prototype.some.call(m.addedNodes || [], function (n) {
+            return n.nodeType === 1 && !isChrome(n) &&
+                   !(n.matches && n.matches(CHROME_ROOTS)); // a non-chrome node was added
+          });
+        });
+        if (relevant) { anchorPass(); render(); }
+      });
       mo.observe(document.body, { childList: true, subtree: true });
       document.addEventListener('review:exited', function () { mo.disconnect(); });
     } catch (e) {}
