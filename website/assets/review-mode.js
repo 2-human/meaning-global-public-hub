@@ -155,10 +155,24 @@
   }
 
   /* ---- Anchoring ---- */
-  var ANCHOR_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'li', 'blockquote']
+  // Prose blocks PLUS media, interactive controls and the site's own components,
+  // so a reviewer can comment on everything on a page, not just text. Because
+  // anchorPass() tags the INNERMOST matching element under the cursor, a card and
+  // the heading/paragraph/image inside it are each independently commentable.
+  var ANCHOR_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'li', 'blockquote',
+    'img', 'figure', 'video',                                  // media
+    '.btn', '.nav__link', '.cta-row',                          // interactive / calls to action
+    '.card', '.pcard', '.media-card', '.svc', '.rung',         // cards, tiles, rows
+    '.pullpanel', '.split', '.credbar', '.quote',              // panels and pull-content
+    '.hero', '.imghead', '.sec-head',                          // page and section heads
+    '.founder', '.founder__book', '.founder__actions',         // founder band
+    '.tslider', '.tslide',                                     // testimonial slider
+    '.hexseg', '.hexstage']                                    // the interactive hexagon
     .concat(Array.isArray(CFG.ANCHOR_TAGS_EXTRA) ? CFG.ANCHOR_TAGS_EXTRA : []);
+  // Only the widget's OWN chrome is off-limits; the site's header/nav/footer are
+  // page content a reviewer may want to comment on.
   var CHROME_SEL = '.review-banner,.review-sidebar,.review-modal-overlay,.review-pill,' +
-    'nav,header[role="banner"],footer,[data-review-skip]';
+    '.review-toast,[data-review-skip]';
 
   function anchorPass() {
     var seen = new Set(), counters = {};
@@ -168,7 +182,8 @@
       if (seen.has(elm)) return; seen.add(elm);
       if (elm.closest(CHROME_SEL)) return;
       if (elm.hasAttribute('data-comment-id')) return;
-      if ((elm.textContent || '').trim().length < 2 && !elm.querySelector('img,video,svg')) return;
+      var mediaSelf = /^(img|video|picture|svg)$/i.test(elm.tagName);
+      if (!mediaSelf && (elm.textContent || '').trim().length < 2 && !elm.querySelector('img,video,svg')) return;
       var tag = elm.tagName.toLowerCase();
       counters[tag] = (counters[tag] || 0) + 1;
       elm.setAttribute('data-comment-id', SLUG + '-' + tag + '-' + counters[tag]);
@@ -278,7 +293,8 @@
   }
   function openComposer(anchor, elm) {
     if (!state.me) state.me = reviewer();
-    var prev = (elm.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 80) || (elm.querySelector('img,video,svg') ? '[media]' : '');
+    var prev = (elm.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 80) ||
+      ((elm.querySelector('img,video,svg') || /^(img|video|picture|svg)$/i.test(elm.tagName)) ? '[media]' : '');
     modal(LABELS.addTitle, anchor, null, null, function (text, repl) {
       state.adapter.create({
         comment: text, replacement: repl || null, anchor: anchor, page: SLUG, author: state.me,
